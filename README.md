@@ -1,0 +1,1 @@
+# Configuracao_Rede_Industrial

@@ -9,8 +9,18 @@ switchport mode access
 switchport access vlan 10
 (fazer isso para todas as vlans)
 
-
 IMPORTANTE!! Criar uma vlan para o servidor DHCP (vlan 50) e atribuir a interface dela como modo acess e vlan 50
+
+Criar o Etherchannel entre os Switches
+Selecionar as interfaces que farão parte do Etherchannel e criar o channel group
+interface range f0/1-3
+channel group 1 mode desirable
+
+Fazer essa configuração nos dois swithces
+Agora para ativar o STP e não ter loop na rede
+(ainda dentro do range)
+spanning-tree mode rapid-pvst
+(esse modo deixa os switches acordarem entre o switch root)
 
 Agora criar as subinterfaces no roteador na conexão do switch
 (NO ROTEADOR) 
@@ -33,3 +43,5 @@ Maximum Number of Users 10
 
 Fazer isso para cada vlan e salvar
 (Talvez seja necessario zerar o servidor, então criar uma pool 0.0.0.0 com tudo 0 para resetar)
+
+colocar os pcs no modo DHCP e pronto

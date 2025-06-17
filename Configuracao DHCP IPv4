@@ -1,1 +1,35 @@
+Primerira coisa que deve fazer é criar as vlans nos switches (IMPORTANTE!!! criar todas as vlans em todos os switches, se tiver muitas, usar a tecnologia VTP)
 
+vlan 10, vlan 20 ...
+
+Depois, atribuir as interfaces para as vlans conectadas (por exemplo da vlan 10, atribuir a interface f0/4)
+
+interface f0/4
+switchport mode access
+switchport access vlan 10
+(fazer isso para todas as vlans)
+
+
+IMPORTANTE!! Criar uma vlan para o servidor DHCP (vlan 50) e atribuir a interface dela como modo acess e vlan 50
+
+Agora criar as subinterfaces no roteador na conexão do switch
+(NO ROTEADOR) 
+interface g0/1.10
+encapsulaion dot1q 10 (numero da vlan, por boas praticas)
+agora colocar o ip do gateway que vai ser configurado no servidor DHCP
+ip address 192.168.10.254 255.255.255.0 (ip e mascara)
+
+e para todas as outras interfaces g0/1.20 , g0/1.30...
+
+Agora para a configuração do DHCP, é preciso criar um IP fixo para ele (nesse caso, foi colocado 192.168.50.10) 
+Agora em services, clicar em DHCP e criar as pools das vlans
+
+Exemplo da vlan 10
+Default Gateway 192.168.10.254
+DNS Server 192.168.50.10
+Start IP Address 192.168.10.10
+Subnet Mask 255.255.255.0
+Maximum Number of Users 10
+
+Fazer isso para cada vlan e salvar
+(Talvez seja necessario zerar o servidor, então criar uma pool 0.0.0.0 com tudo 0 para resetar)

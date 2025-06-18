@@ -1,34 +1,49 @@
 Fazer os PCs (4 e 5) se pingarem atraves do GRE Tunnel 
 
-Primeiramente
+Primeiramente deve-se configurar as interfaces WAN dos roteadores 0 e 8 
 
+Route 0
+enable
+conf t
+interface g0/0/0
+no shut
+ip address 10.0.12.1 255.255.255.0
 
+Route 8
+no shut
+interface g0/0
+ip address 10.0.23.3 255.255.255.0
+
+Route 6
+interface g0/1
+no shut
+ip address 10.0.12.2 255.255.255.0
+
+interface g0/2
+no shut
+ip address 10.0.23.2 255.255.255.0
 
 Configuração do Tunnel GRE
-Route 1
+Route 0
 enable
 conf t
 
-! Configurar a interface Tunnel0
 interface Tunnel0
- ip address 10.0.0.1 255.255.255.252
- tunnel source GigabitEthernet0/0/0
- tunnel destination 10.0.12.1
+ip address 10.0.0.1 255.255.255.252
+tunnel source GigabitEthernet0/0/0
+tunnel destination 10.0.23.3
 end
 
-! Adicionar rota para LAN remota via túnel
 ip route 192.168.70.0 255.255.255.0 10.0.0.2
 
-Route 2
+Route 8
 enable
 conf t
 
-! Configurar a interface Tunnel0
 interface Tunnel0
- ip address 10.0.0.2 255.255.255.252
- tunnel source GigabitEthernet0/0
- tunnel destination 10.0.23.3
+ip address 10.0.0.2 255.255.255.252
+tunnel source GigabitEthernet0/0
+tunnel destination 10.0.12.1
 end
 
-! Adicionar rota para LAN remota via túnel
 ip route 192.168.60.0 255.255.255.0 10.0.0.1

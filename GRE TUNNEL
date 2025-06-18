@@ -14,14 +14,25 @@ no shut
 interface g0/0
 ip address 10.0.23.3 255.255.255.0
 
+
 Route 6
 interface g0/1
 no shut
 ip address 10.0.12.2 255.255.255.0
+ip nat inside
 
 interface g0/2
 no shut
 ip address 10.0.23.2 255.255.255.0
+ip nat inside
+
+interface g0/0
+no shut
+ip address 200.200.200.1 255.255.255.252
+ip nat outside
+exit
+
+ip nat inside source list 1 interface GigabitEthernet0/0 overload
 
 Configuração do Tunnel GRE
 Route 0
